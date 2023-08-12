@@ -1,34 +1,45 @@
 
 let exit = true;
 let saludo = true
+let nombreUsuario = null;
+
 // Función Controladora Principal
 const appController = () =>{
 
+    saludar()
+    registrarUsuario();
 
 do {
-    saludar()
-
-    let resUsuario = Number(prompt(`Ingrese una Opción
+    let resUsuario =  solicitarNumero(`Nombre de Usuario: ${nombreUsuario},
+    Ingrese una Opción
     (Ingrese solo números)
     1 -Calcular el Subtotal de productos
     2- Generar una tabla de multiplicar por consola
-    10 - Salir  `))
-    if (isNaN(resUsuario)){
-     alert("Entrada Incorrecta, Ingrese un número valido");
-        continue;
-    }
+    3- Registrar Nuevo nombre
+    10 - Salir  `, "Entrada Incorrecta, Ingrese un número valido")
+    
     switch (resUsuario) {
         case 1:
             funcionCalcularSubtotal()
             
             break;
+
+        case 2:
+
+            tablaMultiplicar();
+            break;
+        case 3:
+
+        registrarUsuario();
+            break;
+
         case 10:
             exit=false
             break;
     
         default:
             continue;
-            break;
+            
     }
 
 } while (exit);
@@ -37,7 +48,7 @@ despedida()
 //Funcion Inicializadora de calcular Subtotal
 function funcionCalcularSubtotal() {
     let salir =false
-    alert(`Bienvenido al calculo de Subtotales`)
+    alert(`Bienvenido ${nombreUsuario} al calculo de Subtotales`)
     do{
         salir =false
         let cantidadProductos = prompt ("Ingrese la cantidad de diferentes Productos o presione cancelar par salir ")
@@ -75,10 +86,10 @@ for (let index = 0; index < cantidadProductos; index++) {
     let precioProducto = solicitarNumero(`Ingrese el precio del producto`,"Ingrese un valor numerico")   
     let cantProduct = solicitarNumero(`Ingrese la cantidad del Producto`,)
     let subTotal = precioProducto * cantProduct
-   template+=`${nombreProducto}    ${precioProducto}    ${cantProduct}    ${subTotal}\n`
+   template+=`${nombreProducto}    $${precioProducto}    ${cantProduct}    $${subTotal}\n`
     total +=subTotal;
 }
-template+=`Total = ${total}`
+template+=`Total = $${total}`
 alert(template);
 }
 //Mesaje de binvenida
@@ -88,10 +99,11 @@ const saludar = () => {
         saludo=false
 
     }
+
 }
 //Mensaje de despedida
 const despedida = () => {
-    alert ("GoodBye, gracias por visitarnos")
+    alert (`GoodBye, gracias por visitarnos ${nombreUsuario}`)
 }
 
 
@@ -114,4 +126,42 @@ const solicitarNumero =(msgSolicitud,msgResolicitud="Ingrese un valor numerico")
     return numberIngresado
     
 }
+
+// Funcion registradora de Nombre de Usuario
+const registrarUsuario = ()=>{
+   
+    do{
+        if (nombreUsuario){
+            nombreUsuario = prompt (`Nombre Actual ${nombreUsuario}.
+            Ingrese su nuevo nombre: `)
+        }
+        else
+        {
+            nombreUsuario = prompt ("Ingrese su nombre: ")
+
+        }
+            
+        
+
+
+    }while(!nombreUsuario)
+
+}
+
+// Funcion tabla de multiplicar
+
+const tablaMultiplicar =()=>{
+    console.clear();
+    console.log(`Tabla de multiplicar`)
+    let tablaInicial = solicitarNumero("Ingrese el valor de la tabla incial")
+    let tablaFinal = solicitarNumero("Ingrese el valor de la tabla Final");
+
+    for(tablaInicial ; tablaInicial<=tablaFinal; tablaInicial++){
+        for(let j = 1 ; j<=10; j++){
+            console.log(`${tablaInicial} por ${j} es igual a = ${tablaInicial*j}`)
+        }
+    }
+    alert(`Revisa la Consola [Sal de la secuencia]`)
+}
+
 appController()
